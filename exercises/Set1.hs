@@ -73,9 +73,9 @@ eeny x = if (even x) then "eeny" else "meeny"
 -- Modify it so that it accepts two passwords, "swordfish" and
 -- "mellon".
 
-checkPassword :: String -> String -> String
-checkPassword password1 password2 = 
-  if password1 == "mellon" && password2 == "swordfish"
+checkPassword :: String -> String
+checkPassword password = 
+  if password == "mellon" || password == "swordfish"
                          then "You're in."
                          else "ACCESS DENIED!"
 
@@ -90,7 +90,7 @@ checkPassword password1 password2 =
 
 postagePrice :: Int -> Int
 postagePrice w 
-   | w < 500   = 250
+   | w <= 500   = 250
    | w > 5000  = 6000
    | otherwise = 300 + w
 
@@ -102,7 +102,7 @@ postagePrice w
 --
 -- Ps. remember, the type of booleans in haskell is Bool
 
-isZero :: Int -> Bool
+isZero :: Integer -> Bool
 isZero 0 = True
 isZero _ = False
 
