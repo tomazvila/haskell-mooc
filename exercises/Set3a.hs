@@ -46,7 +46,10 @@ maxBy measure a b
 --   mapMaybe length (Just "abc") ==> Just 3
 
 mapMaybe :: (a -> b) -> Maybe a -> Maybe b
-mapMaybe f x = todo
+mapMaybe f x =
+  case x of 
+    Just x  -> Just $ f x
+    Nothing -> Nothing
 
 ------------------------------------------------------------------------------
 -- Ex 3: implement the function mapMaybe2 that works like mapMaybe
@@ -60,7 +63,10 @@ mapMaybe f x = todo
 --   mapMaybe2 div (Just 6) Nothing   ==>  Nothing
 
 mapMaybe2 :: (a -> b -> c) -> Maybe a -> Maybe b -> Maybe c
-mapMaybe2 f x y = todo
+mapMaybe2 f _ Nothing = Nothing
+mapMaybe2 f Nothing _ = Nothing
+mapMaybe2 f (Just x) (Just y) =
+  Just $ f x y
 
 ------------------------------------------------------------------------------
 -- Ex 4: define the functions firstHalf and palindrome so that
@@ -82,9 +88,17 @@ mapMaybe2 f x y = todo
 palindromeHalfs :: [String] -> [String]
 palindromeHalfs xs = map firstHalf (filter palindrome xs)
 
-firstHalf = todo
+firstHalf :: String -> String
+firstHalf s
+  | isEven = take (l `div` 2) s
+  | not isEven = take (l `div` 2 + 1) s
+    where 
+      l = length s
+      isEven = l `mod` 2 == 0
 
-palindrome = todo
+palindrome :: String -> Bool
+palindrome s =
+  s == reverse s
 
 ------------------------------------------------------------------------------
 -- Ex 5: Implement a function capitalize that takes in a string and
@@ -101,8 +115,11 @@ palindrome = todo
 -- Example:
 --   capitalize "goodbye cruel world" ==> "Goodbye Cruel World"
 
+capitalizeFirst :: String -> String
+capitalizeFirst (f : rst) = toUpper f : rst
+
 capitalize :: String -> String
-capitalize = todo
+capitalize s = unwords $ map capitalizeFirst (words s)
 
 ------------------------------------------------------------------------------
 -- Ex 6: powers k max should return all the powers of k that are less
