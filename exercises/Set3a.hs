@@ -135,8 +135,13 @@ capitalize s = unwords $ map capitalizeFirst (words s)
 --   * k^max > max
 --   * the function takeWhile
 
+-- takeWhile
+-- (a -> Bool) -> [a] -> [a]
+
 powers :: Int -> Int -> [Int]
-powers k max = todo
+powers k max = map (k^) list
+  where
+    list = filter (\x -> x < max && k^x <= max) [0..max] 
 
 ------------------------------------------------------------------------------
 -- Ex 7: implement a functional while loop. While should be a function
