@@ -164,7 +164,11 @@ powers k max = map (k^) list
 --     ==> Avvt
 
 while :: (a->Bool) -> (a->a) -> a -> a
-while check update value = todo
+while check update value 
+  | check value == True = while check update value'
+  | check value == False = value
+    where
+      value' = update value
 
 ------------------------------------------------------------------------------
 -- Ex 8: another version of a while loop. This time, the check
@@ -181,8 +185,11 @@ while check update value = todo
 --   whileRight (step 1000) 3  ==> 1536
 
 whileRight :: (a -> Either b a) -> a -> b
-whileRight f x = todo
-
+whileRight f x = 
+  let y = f x
+  in case y of
+    Left  b -> b
+    Right a -> whileRight f a 
 -- for the whileRight examples:
 -- step k x doubles x if it's less than k
 step :: Int -> Int -> Either Int Int
